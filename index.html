@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset=utf-8 />
+	<title></title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="css/menu.css" />
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800italic,800' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+</head>
+<body>
+	 <!-- <i class="fa fa-cog"></i> -->
+	 <div id="o-wrapper" class="o-wrapper">
+	  <div id="logo"><h1>Scale Blitz</h1></div>
+	  <div class="controls">
+	  	  <h3 style="display:none"><span id="count">9</span></h3>
+		  <a href="#" class="btn" id="restart" style="display:none">Restart</a>
+		  <a href="#" class="btn" id="stop" style="display:none">Stop</a>
+		  <a href="#" class="btn" id="start">Start</a>
+	  </div>
+	  <i id="c-button--slide-right" class="c-button fa fa-cog"></i>
+	  <div class='left'>
+	  		<!-- <h1>Key</h1> -->
+	  		<h2 id="key">Key</h2>
+	  </div>
+	  <div class='right'>
+	  		<!-- <h1>Scale</h1> -->
+	  		<h2 id="scale">Scale</h2>
+	  </div>
+	  <div id="c-mask" class="c-mask"></div><!-- /c-mask -->
+	
+	</div>
+
+
+	<nav id="c-menu--slide-right" class="c-menu c-menu--slide-right">
+		<h1>Settings</h1>
+		<div class="counter">
+		<label>Seconds</label><br/>
+		<i class="fa fa-minus-circle input-number-decrement"></i><input id="seconds" class="input-number" type="text" onKeyPress="return isNumber(event)" value="9" max="120" min="0"><i class="fa fa-plus-circle input-number-increment"></i>
+		</div>
+		<div class="keys">
+		  <label>Keys</label><br/>
+		  <ul class="filters">
+		    <li>
+		      <label>
+		        <input type="checkbox" value="naturals" class="input-keys" checked>
+		        <span class="icon"><i class="fa fa-check"></i></span>
+		        Naturals
+		      </label>
+		    </li>
+		    <li>
+		      <label>
+		        <input type="checkbox" value="sharps" class="input-keys" checked>
+		        <span class="icon"><i class="fa fa-check"></i></span>
+		        Sharps
+		      </label>
+		    </li>
+		    <li>
+		      <label>
+		        <input type="checkbox" value="flats"  class="input-keys"  checked>
+		        <span class="icon"><i class="fa fa-check"></i></span>
+		        Flats
+		      </label>
+		    </li>
+		  </ul>
+		</div>
+		<div class="scales">
+		  <label>Scales</label><br/>
+		  <ul class="filters">
+		    <li>
+		      <label>
+		        <input type="checkbox" value="Minor"  class="input-scales"  checked>
+		        <span class="icon"><i class="fa fa-check"></i></span>
+		        Minor
+		      </label>
+		    </li>
+		    <li>
+		      <label>
+		        <input type="checkbox" value="Minor Penatonic"  class="input-scales"  checked>
+		        <span class="icon"><i class="fa fa-check"></i></span>
+		        Minor Penatonic
+		      </label>
+		    </li>
+		    <li>
+		      <label>
+		        <input type="checkbox" value="Major"  class="input-scales"  checked>
+		        <span class="icon"><i class="fa fa-check"></i></span>
+		        Major
+		      </label>
+		    </li>
+		    <li>
+		      <label>
+		        <input type="checkbox" value="Major Penatonic"  class="input-scales"  checked>
+		        <span class="icon"><i class="fa fa-check"></i></span>
+		        Major Penatonic
+		      </label>
+		    </li>
+		    <li>
+		      <label>
+		        <input type="checkbox" value="Dorian"  class="input-scales" checked>
+		        <span class="icon"><i class="fa fa-check"></i></span>
+		        Dorian
+		      </label>
+		    </li>
+		    <li>
+		      <label>
+		        <input type="checkbox" value="Mixolydian"  class="input-scales"  checked>
+		        <span class="icon"><i class="fa fa-check"></i></span>
+		        Mixolydian
+		      </label>
+		    </li>
+		  </ul>
+		</div>
+	  <button class="c-menu__close"><i class="fa fa-times"></i></button>
+	</nav><!-- /c-menu slide-top -->
+
+	<script type="text/javascript" src="js/menu.js"></script>
+	<script type="text/javascript" src="js/Tone.min.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
+	<script>
+
+		 /**
+		   * Slide right instantiation and action.
+		   */
+		  var slideRight = new Menu({
+		    wrapper: '#o-wrapper',
+		    type: 'slide-right',
+		    menuOpenerClass: '.c-button',
+		    maskId: '#c-mask'
+		  });
+
+		  var slideRightBtn = document.querySelector('#c-button--slide-right');
+		  
+		  slideRightBtn.addEventListener('click', function(e) {
+		    e.preventDefault;
+		    slideRight.open();
+		  });
+
+		  /**
+		   * Counter
+		   */
+		   $(".input-number-decrement").click(function(){
+		   		var cur_val = parseInt($(".input-number").val());
+		   		if(cur_val > 0){
+		   			$(".input-number").val( cur_val - 1 );
+		   		}
+		   });
+		   $(".input-number-increment").click(function(){
+		   		var cur_val = parseInt($(".input-number").val());
+		   		if(cur_val < 120){
+		   			$(".input-number").val( cur_val + 1 );
+		   		}
+		   });
+	</script>
+</body>
+</html>
