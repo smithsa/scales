@@ -2,15 +2,14 @@ var ScalePlayer = (function () {
   var synths = {
       'default': new Tone.Synth(),
       'mono': new Tone.MonoSynth(),
-      'poly': new Tone.PolySynth(),
       'pluck': new Tone.PluckSynth(),
       'fm': new Tone.FMSynth()
   }
-  var octave_setting = 4;
-  var current_synth = synths.default.toMaster();
+  var octave_setting = 3;
+  var current_synth = synths.fm.toMaster();
 
   function setSynth(synth_name){
-    current_synth = synths[synth_name];
+    current_synth = synths[synth_name].toMaster();
   }
 
   function getSynth(){
