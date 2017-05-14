@@ -3,6 +3,7 @@
 <head>
 	<meta charset=utf-8 />
 	<title>Scale Blitz</title>
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />
 	<link rel="stylesheet" type="text/css" media="screen" href="css/menu.css" />
@@ -123,43 +124,9 @@
 	  <button class="c-menu__close"><i class="fa fa-times"></i></button>
 	</nav><!-- /c-menu slide-top -->
 
-	<script type="text/javascript" src="js/menu.js"></script>
-	<script type="text/javascript" src="js/Tone.min.js"></script>
-	<script type="text/javascript" src="js/main.js"></script>
-	<script>
-
-		 /**
-		   * Slide right instantiation and action.
-		   */
-		  var slideRight = new Menu({
-		    wrapper: '#o-wrapper',
-		    type: 'slide-right',
-		    menuOpenerClass: '.c-button',
-		    maskId: '#c-mask'
-		  });
-
-		  var slideRightBtn = document.querySelector('#c-button--slide-right');
-		  
-		  slideRightBtn.addEventListener('click', function(e) {
-		    e.preventDefault;
-		    slideRight.open();
-		  });
-
-		  /**
-		   * Counter
-		   */
-		   $(".input-number-decrement").click(function(){
-		   		var cur_val = parseInt($(".input-number").val());
-		   		if(cur_val > 0){
-		   			$(".input-number").val( cur_val - 1 );
-		   		}
-		   });
-		   $(".input-number-increment").click(function(){
-		   		var cur_val = parseInt($(".input-number").val());
-		   		if(cur_val < 120){
-		   			$(".input-number").val( cur_val + 1 );
-		   		}
-		   });
-	</script>
+	<script type="text/javascript" src="js/helpers/pollyfill.js"></script>
+	<script type="text/javascript" src="js/vendors/menu.js"></script>
+	<script type="text/javascript" src="js/vendors/Tone.min.js"></script>
+	<script type="text/javascript" src="js/bundle.js"></script>
 </body>
 </html>
