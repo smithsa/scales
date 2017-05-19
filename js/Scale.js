@@ -37,6 +37,7 @@ var Scale = (function () {
       key = note;
       generateScale(key, scale_forumla, index + 1, scale_list);
   }
+  
   function returnScale(key, scale_forumla){
      var scale_list = [];
      generateScale(key, scale_forumla, 0, scale_list);
@@ -51,8 +52,7 @@ var Scale = (function () {
   }
 
   return {
-        'getScale': getScale,
-        'getMusicalNotes': musical_notes
+        'getScale': getScale
   };
 
 })();

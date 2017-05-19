@@ -49,6 +49,7 @@ var ScaleBlitz = (function () {
               }
           });
     }
+    
     function getScales(){
         var scales = [];
         $("input.input-scales").each(function(){
@@ -68,14 +69,17 @@ var ScaleBlitz = (function () {
       });
       return keys;
     }
+
     function getTime(){
       return parseInt($("#seconds").val());
     }
+
     function updateScaleBlitz(){
       scales = getScales();
       key_accidental = getKeyAccidentals();
       seconds = getTime();
     }
+
     function countdown( elementName, minutes, seconds ){
         var element, endTime, hours, mins, msLeft, time;
         function twoDigits( n )
@@ -89,8 +93,6 @@ var ScaleBlitz = (function () {
             if ( msLeft < 1000 ) {
                 element.innerHTML = "Time Up!";
                 var scale_list = Scale.getScale(current_key, current_scale);
-                // console.log(current_key, current_scale);
-                // console.log(scale_list);
                 ScalePlayer.arpeggiate(scale_list);
                 var scale_duration = 4500;
                 player_timeout = setTimeout(function(){
@@ -111,6 +113,7 @@ var ScaleBlitz = (function () {
         endTime = (+new Date) + 1000 * (60*minutes + seconds) + 500;
         updateTimer();
     }
+
     function randomIntFromInterval(min,max){
         return Math.floor(Math.random()*(max-min+1)+min);
     }
