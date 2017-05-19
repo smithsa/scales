@@ -13,7 +13,6 @@ var ScaleBlitz = (function () {
         keys =  ["A", "B", "C", "D", "E", "F", "G"];
     function init(){
           $("#start").click(function(){   
-              console.log("test");   
               seconds = getTime();
               key_accidental = getKeyAccidentals();
               scales = getScales();
