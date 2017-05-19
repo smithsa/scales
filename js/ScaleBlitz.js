@@ -6,12 +6,14 @@ var ScaleBlitz = (function () {
         key_accidental = null, 
         seconds = null, 
         time_out = null, 
+        player_timeout = null,
         start_string = null, 
         current_key = null, 
         current_scale = null,
         keys =  ["A", "B", "C", "D", "E", "F", "G"];
     function init(){
-          $("#start").click(function(){      
+          $("#start").click(function(){   
+              console.log("test");   
               seconds = getTime();
               key_accidental = getKeyAccidentals();
               scales = getScales();
@@ -31,6 +33,7 @@ var ScaleBlitz = (function () {
               $("#count").hide();
               $("#stop").hide();
               $("#start").show();
+              clearTimeout(player_timeout);
               ScalePlayer.stop();
           });
           $(".input-number-decrement").click(function(){
@@ -89,8 +92,8 @@ var ScaleBlitz = (function () {
                 // console.log(current_key, current_scale);
                 // console.log(scale_list);
                 ScalePlayer.arpeggiate(scale_list);
-                var scale_duration = 4300;
-                setTimeout(function(){
+                var scale_duration = 4500;
+                player_timeout = setTimeout(function(){
                   changeScale();
                   setTimeout(countdown( elementName, minutes, seconds ), 2000);
 

@@ -1,1 +1,426 @@
-!function(n){function t(r){if(e[r])return e[r].exports;var u=e[r]={i:r,l:!1,exports:{}};return n[r].call(u.exports,u,u.exports,t),u.l=!0,u.exports}var e={};t.m=n,t.c=e,t.i=function(n){return n},t.d=function(n,e,r){t.o(n,e)||Object.defineProperty(n,e,{configurable:!1,enumerable:!0,get:r})},t.n=function(n){var e=n&&n.__esModule?function(){return n.default}:function(){return n};return t.d(e,"a",e),e},t.o=function(n,t){return Object.prototype.hasOwnProperty.call(n,t)},t.p="",t(t.s=3)}([function(n,t,e){var r=e(2),u=e(1),o=function(){function n(){$("#start").click(function(){h=o(),p=e(),f=t(),m=c(1,6),l(),$("#start").hide(),$("#stop").show(),$("#count").show(),$(".controls h3").show(),i("count",0,h)}),$("#stop, #c-button--slide-right").click(function(){clearTimeout(v),$("#key").text("Key"),$("#scale").text("Scale"),$("#count").hide(),$("#stop").hide(),$("#start").show(),r.stop()}),$(".input-number-decrement").click(function(){var n=parseInt($(".input-number").val());n>0&&$(".input-number").val(n-1)}),$(".input-number-increment").click(function(){var n=parseInt($(".input-number").val());n<120&&$(".input-number").val(n+1)})}function t(){var n=[];return $("input.input-scales").each(function(){$(this).is(":checked")&&n.push($(this).val())}),n}function e(){var n=[];return $("input.input-keys").each(function(){$(this).is(":checked")&&n.push($(this).val())}),n}function o(){return parseInt($("#seconds").val())}function i(n,t,e){function o(n){return n<=9?"0"+n:n}function c(){if((h=s-+new Date)<1e3){a.innerHTML="Time Up!";var $=u.getScale(d,g);r.arpeggiate($);setTimeout(function(){l(),setTimeout(i(n,t,e),2e3)},4300)}else m=new Date(h),f=m.getUTCHours(),p=m.getUTCMinutes(),a.innerHTML=(f?f+":"+o(p):p)+":"+o(m.getUTCSeconds()),v=setTimeout(c,m.getUTCMilliseconds()+500)}var a,s,f,p,h,m;a=document.getElementById(n),s=+new Date+1e3*(60*t+e)+500,c()}function c(n,t){return Math.floor(Math.random()*(t-n+1)+n)}function a(n,t){var e=n,r="";"B"===t||"E"===t?r="sharps":"C"!==t&&"F"!==t||(r="flats");var u=e.indexOf(r);return u>=0&&e.splice(u,1),e}function s(n){n=n.replace(" Flat","b");var t={"A#":"Bb",Db:"C#","D#":"Eb",Gb:"F#",Ab:"G#"};return t.hasOwnProperty(n)&&(n=t[n]),n}function l(){var n=T[c(0,T.length-1)],t=f[c(0,f.length-1)],e=(c(1,6),a(p,n)),r=e[c(0,p.length-1)];"flats"===r?n+=" Flat":"naturals"===r?n=n:"sharps"===r&&(n+="#"),$("#key").text(n),$("#scale").text(t),d=s(n),g=t}var f=null,p=null,h=null,v=null,m=null,d=null,g=null,T=["A","B","C","D","E","F","G"];return{init:n}}();n.exports=o},function(n,t){var e=function(){function n(n){return i[n]}function t(n,t){var e=o.indexOf(n),r=e+t,u=o.length-1;return r>u&&(r=r-u-1),o[r]}function e(n,r,u,o){var i=r.length;if(o.length===i)return o;var c=r[u]/.5,a=t(n,c);o.push(a),n=a,e(n,r,u+1,o)}function r(n,t){var r=[];return e(n,t,0,r),r.unshift(n),r}function u(t,e){return r(t,n(e))}var o=["A","Bb","B","C","C#","D","Eb","E","F","F#","G","G#"],i={major:[1,1,.5,1,1,1,.5],minor:[1,.5,1,1,.5,1,1],dorian:[1,.5,1,1,1,.5,1],mixolydian:[1,1,.5,1,1,.5,1],"major pentatonic":[1,1,1.5,1,1.5],"minor pentatonic":[1.5,1,1,1.5,1],blues:[1.5,1,.5,.5,1.5,1]};return{getScale:u,getMusicalNotes:o}}();n.exports=e},function(n,t){var e=function(){function n(n){a=i[n].toMaster()}function t(){return a}function e(n,t){return t=t.toString(),n+t}function r(n,t){for(var r=[],u=n.length,o=0;o<u;o++)o==u-1?r.push(e(n[o],t+1)):r.push(e(n[o],t));return r}function u(n){n=r(n,c);var t=new Tone.Pattern(function(n,t){a.triggerAttackRelease(t,.25)},n);t.start(0).stop("2m"),Tone.Transport.schedule(function(n){Tone.Transport.stop()},"2m"),Tone.Transport.start()}function o(){Tone.Transport.stop()}var i={default:new Tone.Synth,mono:new Tone.MonoSynth,pluck:new Tone.PluckSynth,fm:new Tone.FMSynth},c=3,a=i.fm.toMaster();return{currentSynth:a,arpeggiate:u,setSynth:n,getSynth:t,stop:o}}();n.exports=e},function(n,t,e){var r=e(0);$(document).ready(function(){r.init();var n=new Menu({wrapper:"#o-wrapper",type:"slide-right",menuOpenerClass:".c-button",maskId:"#c-mask"});document.querySelector("#c-button--slide-right").addEventListener("click",function(t){t.preventDefault,n.open()})})}]);
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// identity function for calling harmony imports with the correct context
+/******/ 	__webpack_require__.i = function(value) { return value; };
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var ScalePlayer = __webpack_require__(2);
+var Scale = __webpack_require__(1);
+
+var ScaleBlitz = (function () {
+    var scales = null, 
+        key_accidental = null, 
+        seconds = null, 
+        time_out = null, 
+        player_timeout = null,
+        start_string = null, 
+        current_key = null, 
+        current_scale = null,
+        keys =  ["A", "B", "C", "D", "E", "F", "G"];
+    function init(){
+          $("#start").click(function(){   
+              console.log("test");   
+              seconds = getTime();
+              key_accidental = getKeyAccidentals();
+              scales = getScales();
+              start_string = randomIntFromInterval(1,6);
+              changeScale();
+
+              $("#start").hide();
+              $("#stop").show();
+              $("#count").show();
+              $(".controls h3").show();
+              countdown("count", 0, seconds);
+          });
+          $("#stop, #c-button--slide-right").click(function(){
+              clearTimeout(time_out);
+              $("#key").text("Key");
+              $("#scale").text("Scale");
+              $("#count").hide();
+              $("#stop").hide();
+              $("#start").show();
+              clearTimeout(player_timeout);
+              ScalePlayer.stop();
+          });
+          $(".input-number-decrement").click(function(){
+              var cur_val = parseInt($(".input-number").val());
+              if(cur_val > 0){
+                $(".input-number").val( cur_val - 1 );
+              }
+          });
+          $(".input-number-increment").click(function(){
+              var cur_val = parseInt($(".input-number").val());
+              if(cur_val < 120){
+                $(".input-number").val( cur_val + 1 );
+              }
+          });
+    }
+    function getScales(){
+        var scales = [];
+        $("input.input-scales").each(function(){
+          if($(this).is(':checked')){
+            scales.push( $(this).val() );
+          }
+        });
+        return scales;
+    }
+
+    function getKeyAccidentals(){
+      var keys = [];
+      $("input.input-keys").each(function(){
+        if($(this).is(':checked')){
+          keys.push( $(this).val() );
+        }
+      });
+      return keys;
+    }
+    function getTime(){
+      return parseInt($("#seconds").val());
+    }
+    function updateScaleBlitz(){
+      scales = getScales();
+      key_accidental = getKeyAccidentals();
+      seconds = getTime();
+    }
+    function countdown( elementName, minutes, seconds ){
+        var element, endTime, hours, mins, msLeft, time;
+        function twoDigits( n )
+        {
+            return (n <= 9 ? "0" + n : n);
+        }
+
+        function updateTimer()
+        {
+            msLeft = endTime - (+new Date);
+            if ( msLeft < 1000 ) {
+                element.innerHTML = "Time Up!";
+                var scale_list = Scale.getScale(current_key, current_scale);
+                // console.log(current_key, current_scale);
+                // console.log(scale_list);
+                ScalePlayer.arpeggiate(scale_list);
+                var scale_duration = 4500;
+                player_timeout = setTimeout(function(){
+                  changeScale();
+                  setTimeout(countdown( elementName, minutes, seconds ), 2000);
+
+                }, scale_duration);
+            } else {
+                time = new Date( msLeft );
+                hours = time.getUTCHours();
+                mins = time.getUTCMinutes();
+                element.innerHTML = (hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds() );
+                time_out = setTimeout( updateTimer, time.getUTCMilliseconds() + 500 );
+            }
+        }
+
+        element = document.getElementById( elementName );
+        endTime = (+new Date) + 1000 * (60*minutes + seconds) + 500;
+        updateTimer();
+    }
+    function randomIntFromInterval(min,max){
+        return Math.floor(Math.random()*(max-min+1)+min);
+    }
+
+    function isNumber(evt) {
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        return true;
+    }
+
+    function filterKeyType(key_accidental, key){
+        var return_key_accidentals = key_accidental;
+        var remove_val = '';
+        if(key === 'B' || key === 'E'){ //no sharps
+            remove_val = 'sharps';
+        }else if(key === 'C' || key === 'F'){ //no flats
+            remove_val = 'flats';
+        }
+
+        var index = return_key_accidentals.indexOf(remove_val);
+        if (index >= 0) {
+          return_key_accidentals.splice( index, 1 );
+        }
+        return return_key_accidentals;
+    }
+
+    function sanitizeKey(key){
+      key = key.replace(' Flat', 'b');
+      var enharmonic_notes = { 'A#': 'Bb', 'Db': 'C#','D#':'Eb', 'Gb':'F#', 'Ab':'G#'};
+      if(enharmonic_notes.hasOwnProperty(key)){
+        key = enharmonic_notes[key];
+      }
+      return key;
+    }
+
+    function changeScale(){
+        var random_key = keys[randomIntFromInterval(0, keys.length-1)];
+        var random_scale = scales[randomIntFromInterval(0, scales.length-1)];
+        var start_string = randomIntFromInterval(1,6);
+        var filtered_key_accidentals = filterKeyType(key_accidental, random_key);
+        var random_key_accidental = filtered_key_accidentals[randomIntFromInterval(0, key_accidental.length-1)];
+
+        if(random_key_accidental === "flats"){
+          random_key = random_key + " Flat"
+        }
+        else if(random_key_accidental === "naturals"){
+          random_key = random_key;
+        }
+        else if(random_key_accidental === "sharps"){
+          random_key = random_key + "#"
+        }
+
+        $("#key").text(random_key);
+        $("#scale").text(random_scale);
+        current_key = sanitizeKey(random_key);
+        current_scale = random_scale;
+    }
+
+    return {
+      'init': init
+    };
+    
+})();
+
+
+module.exports = ScaleBlitz;
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports) {
+
+var Scale = (function () {
+  var musical_notes = [ 'A', 'Bb', 'B', 'C', 'C#','D','Eb','E','F','F#','G','G#'];
+  var scale_formula = {
+    'major': [1, 1, .5, 1, 1, 1, .5],
+    'minor': [1, .5, 1, 1, .5, 1, 1],
+    'dorian': [1, .5, 1, 1, 1, .5, 1],
+    'mixolydian': [1, 1, .5, 1, 1, .5, 1],
+    'major pentatonic': [1, 1, 1.5, 1, 1.5],
+    'minor pentatonic': [1.5, 1, 1, 1.5, 1],
+    'blues': [1.5, 1, .5, .5, 1.5, 1]
+  };
+  
+  function returnScaleFormula(scale_name){
+    return scale_formula[scale_name];
+  }
+
+  function returnRelativeNote(note, steps){
+    var steps_index = musical_notes.indexOf(note);
+    var musical_notes_index = steps_index + steps;
+    var musical_notes_size = musical_notes.length - 1;
+    var relative_note = '';
+    if(musical_notes_index > musical_notes_size){
+        musical_notes_index = ((musical_notes_index - musical_notes_size) - 1);
+    }
+    relative_note = musical_notes[musical_notes_index];
+    return relative_note;
+  }
+
+  function generateScale(key, scale_forumla, index, scale_list){
+      var scale_forumla_length = scale_forumla.length;
+      if(scale_list.length === scale_forumla_length){
+        return scale_list;
+      }
+      var cur_step = (scale_forumla[index] / .5);
+      var note = returnRelativeNote(key, cur_step);
+      scale_list.push(note);
+      key = note;
+      generateScale(key, scale_forumla, index + 1, scale_list);
+  }
+  function returnScale(key, scale_forumla){
+     var scale_list = [];
+     generateScale(key, scale_forumla, 0, scale_list);
+     scale_list.unshift(key);
+     return scale_list;
+  }
+
+  function getScale(key, scale_name){
+      var formula = returnScaleFormula(scale_name);
+      var scale_notes = returnScale(key, formula);
+      return scale_notes;
+  }
+
+  return {
+        'getScale': getScale,
+        'getMusicalNotes': musical_notes
+  };
+
+})();
+
+module.exports = Scale;
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+var ScalePlayer = (function () {
+  var synths = {
+      'default': new Tone.Synth(),
+      'mono': new Tone.MonoSynth(),
+      'pluck': new Tone.PluckSynth(),
+      'fm': new Tone.FMSynth()
+  }
+  var octave_setting = 4;
+  var current_synth = synths.fm.toMaster();
+
+  function setSynth(synth_name){
+    current_synth = synths[synth_name].toMaster();
+  }
+
+  function getSynth(){
+    return current_synth;
+  }
+  function addOctave(note, octave){
+    octave = octave.toString();
+    var return_note = note+octave;
+    return return_note;
+  }
+  function addOctaves(scale_list, octave){
+     var return_list = [];
+     var len_list = scale_list.length;
+     for(var i=0; i < len_list; i++){
+        if(len_list[0] === len_list[i]  && i != 0){
+          return_list.push(addOctave(scale_list[i], octave + 1));
+        }else{
+          return_list.push( addOctave(scale_list[i], octave) );
+        }
+     }
+     return return_list;
+  }
+
+  function arpeggiateScale(scale_list){
+    scale_list = addOctaves(scale_list, octave_setting);
+    console.log(scale_list);
+    var scale_length = scale_list.length;
+    var release_trigger = 0.4;
+    var pattern = new Tone.Pattern(function(time, note){
+      current_synth.triggerAttackRelease(note, release_trigger);
+    }, scale_list);
+
+    var scale_duration = release_trigger * (scale_length + 1);
+    console.log(scale_duration);
+    var stop_time = scale_duration.toString();
+
+    pattern.start(0).stop(stop_time);
+    Tone.Transport.scheduleOnce(function(time){
+      Tone.Transport.stop();
+    }, stop_time);
+    Tone.Transport.start();
+  }
+
+  function stopPlayer(){
+    Tone.Transport.stop();
+  }
+
+  return {
+      'currentSynth': current_synth,
+      'arpeggiate': arpeggiateScale,
+      'setSynth' : setSynth,
+      'getSynth' : getSynth,
+      'stop' : stopPlayer
+  };
+ 
+})();
+
+module.exports = ScalePlayer;
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var ScaleBlitz = __webpack_require__(0);
+
+$( document ).ready(function() {
+    ScaleBlitz.init();
+	var slideRight = new Menu({
+		wrapper: '#o-wrapper',
+		type: 'slide-right',
+		menuOpenerClass: '.c-button',
+		maskId: '#c-mask'
+	});
+	var slideRightBtn = document.querySelector('#c-button--slide-right');
+	slideRightBtn.addEventListener('click', function(e) {
+		e.preventDefault;
+		slideRight.open();
+	});
+});
+
+
+
+
+
+
+
+
+
+/***/ })
+/******/ ]);

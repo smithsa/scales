@@ -5,7 +5,7 @@ var ScalePlayer = (function () {
       'pluck': new Tone.PluckSynth(),
       'fm': new Tone.FMSynth()
   }
-  var octave_setting = 3;
+  var octave_setting = 4;
   var current_synth = synths.fm.toMaster();
 
   function setSynth(synth_name){
@@ -24,7 +24,7 @@ var ScalePlayer = (function () {
      var return_list = [];
      var len_list = scale_list.length;
      for(var i=0; i < len_list; i++){
-        if(i == (len_list - 1)){
+        if(len_list[0] === len_list[i]  && i != 0){
           return_list.push(addOctave(scale_list[i], octave + 1));
         }else{
           return_list.push( addOctave(scale_list[i], octave) );
@@ -35,12 +35,19 @@ var ScalePlayer = (function () {
 
   function arpeggiateScale(scale_list){
     scale_list = addOctaves(scale_list, octave_setting);
+    console.log(scale_list);
+    var scale_length = scale_list.length;
+    var release_trigger = 0.4;
     var pattern = new Tone.Pattern(function(time, note){
-      current_synth.triggerAttackRelease(note, 0.25);
+      current_synth.triggerAttackRelease(note, release_trigger);
     }, scale_list);
-    var stop_time = "2m"; 
+
+    var scale_duration = release_trigger * (scale_length + 1);
+    console.log(scale_duration);
+    var stop_time = scale_duration.toString();
+
     pattern.start(0).stop(stop_time);
-    Tone.Transport.schedule(function(time){
+    Tone.Transport.scheduleOnce(function(time){
       Tone.Transport.stop();
     }, stop_time);
     Tone.Transport.start();
@@ -55,7 +62,7 @@ var ScalePlayer = (function () {
       'arpeggiate': arpeggiateScale,
       'setSynth' : setSynth,
       'getSynth' : getSynth,
-      'stop' : stopPlayer,
+      'stop' : stopPlayer
   };
  
 })();
