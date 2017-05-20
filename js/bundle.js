@@ -331,7 +331,7 @@ var ScalePlayer = (function () {
       'pluck': new Tone.PluckSynth(),
       'fm': new Tone.FMSynth()
   };
-  var octave_setting = 4;
+  var octave_setting = 3;
   var release_trigger = 0.4;
   var current_synth = synths.fm.toMaster();
   var octave_note_order = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
