@@ -6,7 +6,7 @@ var ScalePlayer = (function () {
       'fm': new Tone.FMSynth()
   };
   var octave_setting = 3;
-  var release_trigger = 0.4;
+  var release_trigger = "4n";
   var current_synth = synths.fm.toMaster();
   var octave_note_order = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
 
@@ -48,7 +48,8 @@ var ScalePlayer = (function () {
       current_synth.triggerAttackRelease(note, release_trigger);
     }, scale_list);
 
-    var scale_duration = release_trigger * (scale_length + 1);
+    // var scale_duration = release_trigger * (scale_length + 1);
+    var scale_duration = "2m";
     var stop_time = scale_duration.toString();
 
     pattern.start(0).stop(stop_time);
