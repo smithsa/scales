@@ -41,8 +41,16 @@ var ScalePlayer = (function () {
      return return_list;
   }
 
-  function arpeggiateScale(scale_list){
-    scale_list = addOctaves(scale_list, octave_setting);
+  function arpeggiateScale(scale_list, is_two_octave = false){
+    if(is_two_octave){
+        octave_one = addOctaves(scale_list, octave_setting);
+        octave_two = addOctaves(scale_list, octave_setting + 1);
+        octave_two.shift();
+        scale_list = octave_one.concat(octave_two);
+      }else{
+        scale_list = addOctaves(scale_list, octave_setting);
+      }
+  
     var scale_length = scale_list.length;
     var pattern = new Tone.Pattern(function(time, note){
       current_synth.triggerAttackRelease(note, release_trigger);

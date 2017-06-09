@@ -10,9 +10,10 @@ var ScaleBlitz = (function () {
         start_string = null, 
         current_key = null, 
         current_scale = null,
+        is_two_octave = 0,
         keys =  ["A", "B", "C", "D", "E", "F", "G"];
     function init(){
-          $("#start").click(function(){   
+          $("#start").on('click', function(){   
               seconds = getTime();
               key_accidental = getKeyAccidentals();
               scales = getScales();
@@ -25,7 +26,7 @@ var ScaleBlitz = (function () {
               $(".controls h3").show();
               countdown("count", 0, seconds);
           });
-          $("#stop, #c-button--slide-right").click(function(){
+          $("#stop, #c-button--slide-right").on('click', function(){
               clearTimeout(time_out);
               $("#key").text("Key");
               $("#scale").text("Scale");
@@ -35,17 +36,20 @@ var ScaleBlitz = (function () {
               clearTimeout(player_timeout);
               ScalePlayer.stop();
           });
-          $(".input-number-decrement").click(function(){
+          $(".input-number-decrement").on('click', function(){
               var cur_val = parseInt($(".input-number").val());
               if(cur_val > 0){
                 $(".input-number").val( cur_val - 1 );
               }
           });
-          $(".input-number-increment").click(function(){
+          $(".input-number-increment").on('click', function(){
               var cur_val = parseInt($(".input-number").val());
               if(cur_val < 120){
                 $(".input-number").val( cur_val + 1 );
               }
+          });
+          $("input[name='octave_num']").on('change', function(){
+              is_two_octave = parseInt($("input[name='octave_num']:checked").val());
           });
     }
     
@@ -92,7 +96,11 @@ var ScaleBlitz = (function () {
             if ( msLeft < 1000 ) {
                 element.innerHTML = "Time Up!";
                 var scale_list = Scale.getScale(current_key, current_scale);
-                ScalePlayer.arpeggiate(scale_list);
+                if(is_two_octave == 1){
+                    ScalePlayer.arpeggiate(scale_list, true);
+                }else{
+                    ScalePlayer.arpeggiate(scale_list);
+                }
                 var scale_duration = 4500;
                 player_timeout = setTimeout(function(){
                   changeScale();
