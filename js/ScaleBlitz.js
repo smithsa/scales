@@ -13,20 +13,20 @@ var ScaleBlitz = (function () {
         is_two_octave = 0,
         keys =  ["A", "B", "C", "D", "E", "F", "G"];
     function init(){
-          $("#start").on('click', function(){   
+          $("#bpm").select2();
+          $("#start").click(function(){   
               seconds = getTime();
               key_accidental = getKeyAccidentals();
               scales = getScales();
               start_string = randomIntFromInterval(1,6);
               changeScale();
-
               $("#start").hide();
               $("#stop").show();
               $("#count").show();
               $(".controls h3").show();
               countdown("count", 0, seconds);
           });
-          $("#stop, #c-button--slide-right").on('click', function(){
+          $("#stop, #c-button--slide-right").click(function(){
               clearTimeout(time_out);
               $("#key").text("Key");
               $("#scale").text("Scale");
@@ -36,20 +36,24 @@ var ScaleBlitz = (function () {
               clearTimeout(player_timeout);
               ScalePlayer.stop();
           });
-          $(".input-number-decrement").on('click', function(){
+          $(".input-number-decrement").click(function(){
               var cur_val = parseInt($(".input-number").val());
               if(cur_val > 0){
                 $(".input-number").val( cur_val - 1 );
               }
           });
-          $(".input-number-increment").on('click', function(){
+          $(".input-number-increment").click(function(){
               var cur_val = parseInt($(".input-number").val());
               if(cur_val < 120){
                 $(".input-number").val( cur_val + 1 );
               }
           });
-          $("input[name='octave_num']").on('change', function(){
+          $("input[name='octave_num']").click(function(){
               is_two_octave = parseInt($("input[name='octave_num']:checked").val());
+          });
+
+          $("#bpm").change(function(){
+              ScalePlayer.changeTempo($(this).val());
           });
     }
     
@@ -101,7 +105,8 @@ var ScaleBlitz = (function () {
                 }else{
                     ScalePlayer.arpeggiate(scale_list);
                 }
-                var scale_duration = 4500;
+                var scale_duration = (ScalePlayer.getScaleDuration()) * 1000;
+                console.log(ScalePlayer.getScaleDuration());
                 player_timeout = setTimeout(function(){
                   changeScale();
                   setTimeout(countdown( elementName, minutes, seconds ), 2000);

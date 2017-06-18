@@ -82,15 +82,16 @@ var ScaleBlitz = (function () {
         start_string = null, 
         current_key = null, 
         current_scale = null,
+        is_two_octave = 0,
         keys =  ["A", "B", "C", "D", "E", "F", "G"];
     function init(){
+          $("#bpm").select2();
           $("#start").click(function(){   
               seconds = getTime();
               key_accidental = getKeyAccidentals();
               scales = getScales();
               start_string = randomIntFromInterval(1,6);
               changeScale();
-
               $("#start").hide();
               $("#stop").show();
               $("#count").show();
@@ -118,6 +119,13 @@ var ScaleBlitz = (function () {
               if(cur_val < 120){
                 $(".input-number").val( cur_val + 1 );
               }
+          });
+          $("input[name='octave_num']").click(function(){
+              is_two_octave = parseInt($("input[name='octave_num']:checked").val());
+          });
+
+          $("#bpm").change(function(){
+              ScalePlayer.changeTempo($(this).val());
           });
     }
     
@@ -164,8 +172,13 @@ var ScaleBlitz = (function () {
             if ( msLeft < 1000 ) {
                 element.innerHTML = "Time Up!";
                 var scale_list = Scale.getScale(current_key, current_scale);
-                ScalePlayer.arpeggiate(scale_list);
-                var scale_duration = 4500;
+                if(is_two_octave == 1){
+                    ScalePlayer.arpeggiate(scale_list, true);
+                }else{
+                    ScalePlayer.arpeggiate(scale_list);
+                }
+                var scale_duration = (ScalePlayer.getScaleDuration()) * 1000;
+                console.log(ScalePlayer.getScaleDuration());
                 player_timeout = setTimeout(function(){
                   changeScale();
                   setTimeout(countdown( elementName, minutes, seconds ), 2000);
@@ -332,10 +345,10 @@ var ScalePlayer = (function () {
       'fm': new Tone.FMSynth()
   };
   var octave_setting = 2;
-  var release_trigger = "4n";
   var current_synth = synths.fm.toMaster();
   var octave_note_order = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
-
+  var scale_duration = 0;
+  var cur_temp = 120;
   function setSynth(synth_name){
     current_synth = synths[synth_name].toMaster();
   }
@@ -343,7 +356,9 @@ var ScalePlayer = (function () {
   function getSynth(){
     return current_synth;
   }
-
+  function getScaleDuration(){
+    return scale_duration;
+  }
   function addOctave(note, octave){
     octave = octave.toString();
     var return_note = note+octave;
@@ -358,40 +373,60 @@ var ScalePlayer = (function () {
         var index_cur_note = octave_note_order.indexOf(scale_list[i][0]);
         if(scale_list[0] === scale_list[i]  && i != 0){
           return_list.push(addOctave(scale_list[i], octave + 1));
+          octave += 1;
         }else if(index_cur_note < index_root_note){
           return_list.push(addOctave(scale_list[i], octave + 1));
         }else{
           return_list.push(addOctave(scale_list[i], octave));
         }
      }
+
      return return_list;
   }
 
-  function arpeggiateScale(scale_list){
-    scale_list = addOctaves(scale_list, octave_setting);
+  function arpeggiateScale(scale_list, is_two_octave = false){
+    is_two_octave = (typeof is_two_octave !== 'undefined') ?  is_two_octave : false;
+    if(is_two_octave){
+        octave_one = scale_list;
+        octave_two = scale_list.slice();
+        octave_two.shift();
+        scale_list = octave_one.concat(octave_two);
+      }
+
+      scale_list = addOctaves(scale_list, octave_setting);
+      console.log(scale_list);
+  
+    var release_trigger = 60/cur_temp;
     var scale_length = scale_list.length;
     var pattern = new Tone.Pattern(function(time, note){
       current_synth.triggerAttackRelease(note, release_trigger);
     }, scale_list);
 
-    // var scale_duration = release_trigger * (scale_length + 1);
-    var scale_duration = "2m";
-    var stop_time = scale_duration.toString();
+    scale_duration = release_trigger * (scale_length);
+    var stop_time = scale_duration;
 
-    pattern.start(0).stop(stop_time);
+    pattern.iterations = scale_length;
+    pattern.start(.5);
+    Tone.Transport.start();
     Tone.Transport.scheduleOnce(function(time){
       Tone.Transport.stop();
     }, stop_time);
-    Tone.Transport.start();
   }
 
   function stopPlayer(){
     Tone.Transport.stop();
   }
 
+  function changeTempo(tempo){
+    cur_temp = parseInt(tempo);
+    Tone.Transport.bpm.rampTo(parseInt(tempo));
+  }
+
   return {
       'currentSynth': current_synth,
       'arpeggiate': arpeggiateScale,
+      'getScaleDuration': getScaleDuration,
+      'changeTempo' : changeTempo,
       'setSynth' : setSynth,
       'getSynth' : getSynth,
       'stop' : stopPlayer

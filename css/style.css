@@ -100,6 +100,7 @@ html,body{
   color: #ffffff;
   font-weight: 700;
   text-transform: uppercase;
+  -webkit-overflow-scrolling: touch;
 }
 #c-button--slide-right{
   font-size: 34px;
@@ -149,9 +150,9 @@ html,body{
   font-weight: bold;
   cursor: pointer;
 }
-.counter{
+.counter, .bpm, .octaves{
   text-align: center;
-  margin-top:40px;
+  margin-top:30px;
 }
 .counter i{
   font-size:21px;
@@ -160,7 +161,11 @@ html,body{
   text-align: center;
   margin-top:40px;
 }
-.keys label, .scales label, .counter label{
+.keys label,
+.scales label,
+.counter label,
+.bpm label,
+.octave label{
   font-size:18px;
   padding-bottom:10px;
 }
@@ -276,4 +281,42 @@ ul.filters{
 }
 #count, #stop{
   text-transform: uppercase;
+}
+.bpm{
+  padding-left:20px;
+  padding-right:20px;
+}
+.bpm label{
+  display: block;
+}
+.bpm #bpm{
+  width: 100%;
+  border-radius: 4px !important;
+  border: none !important;
+}
+.select2-dropdown{
+  border: none !important;
+}
+.select2-container--default .select2-selection--single .select2-selection__rendered{
+  color: #1abc9c !important;
+}
+.select2-container--default .select2-selection--single{
+  border: none !important;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow b{
+  border-color: #1abc9c transparent transparent transparent !important;
+}
+.octave-filter{
+  background: #ffffff;
+  margin-top:10px;
+  padding:8px;
+  color: #1abc9c;
+  margin-left:20px;
+  margin-right: 20px;
+  border-radius: 4px;
+  margin-bottom:40px;
+  font-size: 13px;
+}
+.octave-filter label:first-child{
+  margin-right: 10px;
 }
