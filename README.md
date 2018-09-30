@@ -16,7 +16,7 @@ The application was built using HTML, CSS, JavaScript, JQuery, and Webpack. The 
 ## Built With
 *	[NPM](https://www.npmjs.com/)
 *	[Webpack](https://webpack.js.org/)
-*	[Tone.js](http://opensource.org/licenses/MIT MIT License)
+*	[Tone.js](http://opensource.org/licenses/MIT MIT License/)
 
 ## License
 
