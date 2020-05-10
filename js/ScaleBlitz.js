@@ -55,6 +55,11 @@ var ScaleBlitz = (function () {
           $("#bpm").change(function(){
               ScalePlayer.changeTempo($(this).val());
           });
+
+          // Chrome prevents audio context from starting without user insteraction, resume the context after first mousedown event
+          document.addEventListener("mousedown", function(){
+            if (Tone.context.state !== 'running') Tone.context.resume();
+          },  { once: true });
     }
     
     function getScales(){
