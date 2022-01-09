@@ -15,10 +15,23 @@ module.exports = {
   plugins: [
     new CopyPlugin({
       patterns: [
-        { from: "./src/js", to: "./js" },
-        { from: "./src/css", to: "./css" },
+        { from: "./src", to: "./" },
         { from: "./src/index.html", to: "./index.html" }
       ]
     }),
   ],
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        include: path.resolve(__dirname, 'dist/'),
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env']
+          }
+        }
+      }
+    ]
+  }
 };
