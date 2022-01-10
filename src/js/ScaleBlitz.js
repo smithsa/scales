@@ -1,20 +1,21 @@
 var ScalePlayer = require('./ScalePlayer');
 var Scale = require('./Scale');
 
+let scalePlayer = new ScalePlayer();
 var ScaleBlitz = (function () {
-    var scales = null, 
-        key_accidental = null, 
-        seconds = null, 
-        time_out = null, 
+    var scales = null,
+        key_accidental = null,
+        seconds = null,
+        time_out = null,
         player_timeout = null,
-        start_string = null, 
-        current_key = null, 
+        start_string = null,
+        current_key = null,
         current_scale = null,
         is_two_octave = 0,
         keys =  ["A", "B", "C", "D", "E", "F", "G"];
     function init(){
           $("#bpm").select2();
-          $("#start").click(function(){   
+          $("#start").click(function(){
               seconds = getTime();
               key_accidental = getKeyAccidentals();
               scales = getScales();
@@ -34,7 +35,7 @@ var ScaleBlitz = (function () {
               $("#stop").hide();
               $("#start").show();
               clearTimeout(player_timeout);
-              ScalePlayer.stop();
+              scalePlayer.stop();
           });
           $(".input-number-decrement").click(function(){
               var cur_val = parseInt($(".input-number").val());
@@ -53,7 +54,7 @@ var ScaleBlitz = (function () {
           });
 
           $("#bpm").change(function(){
-              ScalePlayer.changeTempo($(this).val());
+              scalePlayer.changeTempo($(this).val());
           });
 
           // Chrome prevents audio context from starting without user insteraction, resume the context after first mousedown event
@@ -61,7 +62,7 @@ var ScaleBlitz = (function () {
             if (Tone.context.state !== 'running') Tone.context.resume();
           },  { once: true });
     }
-    
+
     function getScales(){
         var scales = [];
         $("input.input-scales").each(function(){
@@ -104,14 +105,13 @@ var ScaleBlitz = (function () {
             msLeft = endTime - (+new Date);
             if ( msLeft < 1000 ) {
                 element.innerHTML = "Time Up!";
-                var scale_list = Scale.getScale(current_key, current_scale);
+                var scale_list = new Scale.getScale(current_key, current_scale);
                 if(is_two_octave == 1){
-                    ScalePlayer.arpeggiate(scale_list, true);
+                  scalePlayer.arpeggiate(scale_list, true);
                 }else{
-                    ScalePlayer.arpeggiate(scale_list);
+                  scalePlayer.arpeggiate(scale_list);
                 }
-                var scale_duration = (ScalePlayer.getScaleDuration()) * 1000;
-                console.log(ScalePlayer.getScaleDuration());
+                var scale_duration = (scalePlayer.getScaleDuration()) * 1000;
                 player_timeout = setTimeout(function(){
                   changeScale();
                   setTimeout(countdown( elementName, minutes, seconds ), 2000);
@@ -195,7 +195,7 @@ var ScaleBlitz = (function () {
     return {
       'init': init
     };
-    
+
 })();
 
 
